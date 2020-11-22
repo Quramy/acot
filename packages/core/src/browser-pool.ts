@@ -49,6 +49,18 @@ export class BrowserPool {
     }
   }
 
+  public get idle(): number {
+    return this._available.size;
+  }
+
+  public get waiting(): number {
+    return this._busy.size;
+  }
+
+  public get size(): number {
+    return this.idle + this.waiting;
+  }
+
   public async bootstrap(parallel: number): Promise<void> {
     const { launchOptions } = this._config;
 
@@ -87,7 +99,7 @@ export class BrowserPool {
   }
 
   private async _work(): Promise<void> {
-    if (this._available.size === 0 || this._queue.size === 0) {
+    if (this.idle === 0 || this._queue.size === 0) {
       return;
     }
 

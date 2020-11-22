@@ -19,7 +19,6 @@ describe('BrowserPool', () => {
         } as any;
 
         this._browser = closer;
-        this._page = closer;
 
         this.close = jest.fn().mockReturnValue(Promise.resolve());
 
